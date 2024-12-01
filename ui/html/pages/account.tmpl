@@ -1,0 +1,29 @@
+{{define "title"}}Account{{ end }}
+
+{{define "main"}}
+<section class="account">
+  <div class="container">
+    <div class="table-container">
+      <h2>Your Account</h2>
+      {{ with.User }}
+      <table class="account-details">
+        <tr>
+          <th>Username</th>
+          <td>{{.User}}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{.Email}}</td>
+        </tr>
+        <tr>
+          <th>Joined</th>
+          <td>{{ .Created | humanDate }}</td>
+        </tr>
+        <th>Password</th>
+        <td><a class="link" href="/account/password/update">Change Password</a></td>
+      </table>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

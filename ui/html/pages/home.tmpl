@@ -1,0 +1,68 @@
+{{define "title"}}Home{{end}}
+
+{{define "main"}}
+<section class="home">
+  <div class="container">
+    {{if .IsAuthenticated}}
+    <p class="greeting">Welcome Back, {{.User.User}}!</p>
+    {{end}}
+    <div class="wrapper">
+      <h2>Forum Discussion Threads</h2>
+      {{if .IsAuthenticated}}
+      <a class="link" href="/create/thread">Post Threads</a>
+      {{end}}
+    </div>
+    <div class="grid">
+      {{if .Threads}}
+      {{range .Threads}}
+      <div class="card">
+        <div class="wrapper">
+          <p>
+            <strong>Thread:</strong>
+            <a class="link" href="/read/thread/{{.ID}}">{{.Title}}</a>
+          </p>
+          <p>
+            <em>{{.ThreadCreated | humanDate}}</em>
+          </p>
+        </div>
+        <p><strong>By: </strong>{{.Author.User}}</p>
+        {{if .Messages}}
+          <a href="/read/thread/{{.ID}}">
+            {{with .Messages}}
+              {{with index . 0}}
+                <div class="message">
+                  <p>
+                    <strong>{{.Author.User}}</strong>:
+                  </p>
+                  <p>
+                    {{if gt (len .Body) 100}}
+                      {{slice .Body 0 100}}...
+                    {{else}}
+                      {{.Body}}
+                    {{end}}
+                  </p>
+                </div>
+              {{end}}
+            {{end}}
+          </a>
+        {{else}}
+          
+        {{end}}
+      </div>
+      {{end}}
+      {{else}}
+      <p>No Discussion Threads!</p>
+      {{end}}
+    </div>
+    <div class="pagination">
+      {{if .PrevLink}}
+          <a href="{{.PrevLink}}">Previous</a>
+      {{end}}
+      {{if .NextLink}}
+          <a href="{{.NextLink}}">Next</a>
+      {{end}}
+    </div>
+  </div>
+</section>
+{{end}}
+

@@ -1,0 +1,22 @@
+{{define "base"}}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ template "title" . }}</title>
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <script src="/static/js/main.js" type="text/javascript"></script>
+  </head>
+  <body>
+    {{ template "nav" . }}
+      {{ with.Flash }}
+      <div class="container flash-container">
+        <p class="flash">{{ . }}</p>
+      </div>
+      {{ end }}
+    {{ template "main" . }}
+    {{ template "footer" . }}
+  </body>
+</html>
+{{ end }}

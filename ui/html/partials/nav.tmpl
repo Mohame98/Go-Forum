@@ -1,0 +1,30 @@
+{{define "nav"}}
+<nav>
+  <div class="container">
+    <div class="logo">
+      <ul>
+        <li><a href="/"><h1>Forum</h1></a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </div>
+    <div class="user"> 
+      {{if .IsAuthenticated}}
+      <ul>
+        <li><a href="/user/account/view">Account</a></li>
+        <li>
+          <form action="/user/logout" method="POST">
+            <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+      </ul>
+      {{else}}
+      <ul>
+        <li><a href="/user/register">Register</a></li>
+        <li><a class="login" href="/user/login">Login</a></li>
+      </ul>
+      {{ end }}
+    </div>
+  </div>
+</nav>
+{{ end }}

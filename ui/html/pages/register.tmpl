@@ -1,0 +1,39 @@
+{{define "title"}}registration{{ end }}
+
+{{define "main"}}
+<section class="registration form">
+  <div class="container">
+    <div class="form-container">
+      <h2>Register an Account</h2>
+      <form action="/user/register" method="POST">
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
+        {{ range.Form.NonFieldErrors }}
+        <div class="error">{{.}}</div>
+        {{ end }}
+        <label>
+          user:
+          {{ with.Form.FieldErrors.user }}
+          <span class="error">{{.}}</span>
+          {{ end }}
+          <input type="text" name="user" id="user" value="{{.Form.User}}" />
+        </label>
+        <label>
+          Email:
+          {{ with.Form.FieldErrors.email }}
+          <label class="error">{{.}}</label>
+          {{ end }}
+          <input type="email" name="email" id="email" value="{{.Form.Email}}" />
+        </label>
+        <label>
+          Password:
+          {{ with.Form.FieldErrors.password }}
+          <label class="error">{{.}}</label>
+          {{ end }}
+          <input type="password" name="password" id="password" />
+        </label>
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,22 @@
+{{define "title"}}New Thread{{ end }}
+
+{{define "main"}}
+<section class="new-thread form">
+  <div class="container">
+    <div class="form-container">
+    <h2>Post A New Thread</h2>
+    <form action="/create/thread" method="POST">
+      <input type="hidden" name="csrf_token" value="{{.CSRFToken}}"/>
+      <label>
+        Title:
+        {{ with.Form.FieldErrors.title}}
+          <span class='error'>{{.}}</span>
+        {{end}}
+        <input type="text" id="title" name="title" value='{{.Form.Title}}'/>
+      </label>
+      <button type="submit">Post Thread</button>
+    </form>
+    </div>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,23 @@
+{{define "title"}}New Thread Message{{ end }}
+
+{{define "main"}}
+<section class="new-Message form">
+  <div class="container">
+    <div class="form-container">
+      <p><strong>Thread:</strong>{{.Thread.Title}}</p>
+      <h2>New message</h2>
+      <form action="/thread/newmessage/{{.Thread.ID}}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}"/>
+        <label>
+          Message:
+          {{ with.Form.FieldErrors.message}}
+            <span class="error">{{.}}</span>
+          {{ end }}
+          <textarea id="message" name="message" rows="4" cols="50">{{.Form.Message}}</textarea>
+        </label>
+        <button type="submit">Post Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  width: 90%;
+  position: relative;
+}
+
+section {
+  padding-top: 60px;
+  min-height: 80vh;
+}
+
+.flash {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  color: #fff;
+  text-align: center; 
+  width: 40%;
+  position: absolute;
+  top: 27px;
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+}
+
+.flash {
+  opacity: 0; 
+  animation: flashAnimation 5s ease-in;
+}
+
+@keyframes flashAnimation {
+  0% {
+    opacity: 0; 
+  }
+  10% {
+    opacity: 1; 
+  }
+  90% {
+    opacity: 1; 
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.error {
+  color: #ff0000;
+}
+
+nav .login {
+  color: green;
+}
+
+h2{
+  margin-bottom: 25px;
+}
+
+/* all forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-transform: capitalize;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 300px;
+}
+
+form input {
+  padding: 5px;
+}
+
+textarea {
+  height: 150px;
+  width: 400px;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+}
+
+.form .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #2e6da4;
+  text-decoration: underline;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* nav */
+nav {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo a {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+nav ul li {
+  list-style-type: none;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+nav form {
+  margin-top: 0;
+}
+
+nav form button {
+  color: #ff0000;
+  background-color: transparent;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+}
+
+/* home */
+.home .grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.home .card {
+  padding: 20px;
+  border: lightgray solid thin;
+}
+
+.home .wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.home .message {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  color: #fff;
+  margin-top: 20px;
+  transition: 0.4s;
+}
+
+.home .message:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.home .pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.home .pagination a {
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+.home .pagination a:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Home greeting */
+.greeting {
+  color: #4caf50;
+  font-size: 1em;
+  margin-bottom: 40px;
+}
+
+/* read thread */
+.read-thread .wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.read-thread .thread-discussion {
+  padding-top: 20px;
+}
+
+.read-thread .grid {
+  padding: 30px 0;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+.read-thread .card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border: lightgray solid thin;
+}
+
+/* account table */
+.account-details {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-details th{
+  padding: 20px 15px;
+  text-align: left;
+}
+
+.account-details td {
+  padding: 20px 15px;
+  text-align: right;
+}
+
+.account-details tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+.account-details th {
+  border-bottom: 1px solid #ddd;
+}
+
+.account-details td {
+  border-bottom: 1px solid #ddd;
+}
+
+.account-details tbody tr:nth-child(even) {
+  background-color: #f9f9f9; 
+}
+
+.account-details tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/* footer */
+footer h3 {
+  padding: 25px 0;
+  text-align: center;
+}

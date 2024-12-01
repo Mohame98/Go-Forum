@@ -1,0 +1,38 @@
+{{define "title"}}View Thread{{ end }}
+
+{{define "main"}}
+<section class="read-thread">
+  <div class="container">
+    <div class="wrapper">
+      <h2>{{.Thread.Title}}</h2>
+      <a class="link" href="/thread/newmessage/{{.Thread.ID}}">Post Messages</a>
+    </div>
+    <p><strong>By: </strong> {{.Thread.Author.User}}</p>
+    <div class="thread-discussion">
+      <p>
+        <strong>Created:</strong><em> {{.Thread.ThreadCreated | humanDate}}</em>
+      </p>
+    </div>
+    <div class="grid">
+      {{if .Thread.Messages}}
+      <h3>Messages:</h3>
+      {{ range.Thread.Messages }}
+      <div class="card">
+        <div class="wrapper">
+          <p>
+            <strong>{{.Author.User}}:</strong>
+          </p>
+          <p>
+            <em>{{.MessageCreated | humanDate}}</em>
+          </p>
+        </div>
+        <p class="body">{{.Body}}</p>
+      </div>
+      {{ end }}
+      {{else}}
+      <p>No Messages Yet!</p>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
