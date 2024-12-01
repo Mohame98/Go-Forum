@@ -6,7 +6,7 @@ import (
 	"forum/internal/models"
 	"html/template"
 	"database/sql"
-	"crypto/tls"
+	// "crypto/tls"
 	"log/slog"
 	"net/http"
 	"time"
@@ -26,7 +26,9 @@ type application struct {
 }
 
 func main() {
-	addr := flag.String("addr", ":4000", "HTTP network address")
+	// addr := flag.String("addr", ":4000", "HTTP network address")
+	addr := flag.String("addr", ":" + os.Getenv("PORT"), "HTTP network address")
+	// dbPath := flag.String("dbPath", "./forum.sqlite", "Path to database file")
 	flag.Parse()
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
@@ -60,34 +62,40 @@ func main() {
 		sessionManager: 	sessionManager,
 	}
 
-	tlsConfig := &tls.Config{
-		CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256},
-		MinVersion: tls.VersionTLS12,
-		MaxVersion: tls.VersionTLS12,
-		CipherSuites: []uint16{
-			tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
-			tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-			tls.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,
-			tls.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,
-			tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-			tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-		},
-	}
+	// tlsConfig := &tls.Config{
+	// 	CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256},
+	// 	MinVersion: tls.VersionTLS12,
+	// 	MaxVersion: tls.VersionTLS12,
+	// 	CipherSuites: []uint16{
+	// 		tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+	// 		tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+	// 		tls.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,
+	// 		tls.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,
+	// 		tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+	// 		tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+	// 	},
+	// }
 
 	server := &http.Server{
 		Addr: *addr,
 		MaxHeaderBytes: 524288,
 		Handler: app.routes(),
 		ErrorLog: slog.NewLogLogger(logger.Handler(), slog.LevelError),
-		TLSConfig: tlsConfig,
+		// TLSConfig: tlsConfig,
 
 		IdleTimeout: time.Minute,
 		ReadTimeout: 5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
+
+	// Use environment variable for port or fallback to default port
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "4000" // Default port for local development
+	}
 	
 	logger.Info("Starting server", slog.Any("addr", server.Addr))
-	err = server.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
+	err = server.ListenAndServe()
 	logger.Error(err.Error())
 	os.Exit(1)
 }
