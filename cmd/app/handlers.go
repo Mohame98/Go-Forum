@@ -1,8 +1,8 @@
 package main
 
 import (
-	"forum/internal/validator"
-	"forum/internal/models"
+	"github.com/Mohame98/go-forum/internal/validator"
+	"github.com/Mohame98/go-forum/internal/models"
 	"net/http"
 	"strconv"
 	"errors"

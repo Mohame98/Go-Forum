@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/alexedwards/scs/v2"
-	_ "modernc.org/sqlite"
-	"forum/internal/models"
+	_ "github.com/lib/pq"
+	"github.com/Mohame98/go-forum/internal/models"
 	"html/template"
 	"database/sql"
 	// "crypto/tls"
@@ -91,7 +91,7 @@ func main() {
 	// Use environment variable for port or fallback to default port
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "4000" // Default port for local development
+		port = "4000" 
 	}
 	
 	logger.Info("Starting server", slog.Any("addr", server.Addr))

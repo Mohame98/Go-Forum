@@ -1,7 +1,7 @@
 package main
 
 import (
-	"forum/internal/models"
+	"github.com/Mohame98/go-forum/internal/models"
 	"bytes"
 	"fmt"
 	"html/template"
