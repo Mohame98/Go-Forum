@@ -2,17 +2,15 @@ package main
 
 import (
 	"github.com/alexedwards/scs/v2"
-	_ "github.com/lib/pq"
+	_ "modernc.org/sqlite"
 	"github.com/Mohame98/go-forum/internal/models"
 	"html/template"
 	"database/sql"
 	// "crypto/tls"
-	"github.com/joho/godotenv"
 	"log/slog"
 	"net/http"
 	"time"
 	"flag"
-	"fmt"
 	"os"
 )
 
@@ -27,14 +25,13 @@ type application struct {
 }
 
 func main() {
-	// addr := flag.String("addr", ":4000", "HTTP network address")
-	addr := flag.String("addr", ":" + os.Getenv("PORT"), "HTTP network address")
-	// dbPath := flag.String("dbPath", "./forum.sqlite", "Path to database file")
+	addr := flag.String("addr", ":4000", "HTTP network address")
+	dbPath := flag.String("dbPath", "./forum.sqlite", "Path to database file")
 	flag.Parse()
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
-	db, err := openDB()
+	db, err := openDB(*dbPath)
 	if err != nil { logger.Error(err.Error())
 		os.Exit(1)
 	}
@@ -78,7 +75,7 @@ func main() {
 	// }
 
 	server := &http.Server{
-		Addr: ":" + *addr,
+		Addr: *addr,
 		MaxHeaderBytes: 524288,
 		Handler: app.routes(),
 		ErrorLog: slog.NewLogLogger(logger.Handler(), slog.LevelError),
@@ -88,18 +85,6 @@ func main() {
 		ReadTimeout: 5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
-
-	// Load environment variables from .env file
-	err = godotenv.Load()
-	if err != nil { logger.Error(err.Error())
-		os.Exit(1)
-	}
-
-	// Use environment variable for port or fallback to default port
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "4000" 
-	}
 	
 	logger.Info("Starting server", slog.Any("addr", server.Addr))
 	err = server.ListenAndServe()
@@ -108,14 +93,13 @@ func main() {
 }
 
 // openDB opens a database connection
-func openDB() (*sql.DB, error) {
-	connStr := os.Getenv("DATABASE_URL")
-	if connStr == "" { return nil, fmt.Errorf("DATABASE_URL is not set") }
-
-	db, err := sql.Open("postgres", connStr)
+func openDB(path string) (*sql.DB, error) {
+	db, err := sql.Open("sqlite", path)
 	if err != nil { return nil, err }
 
 	err = db.Ping()
-	if err != nil { db.Close(); return nil, err }
+	if err != nil { db.Close()
+		return nil, err
+	}
 	return db, nil
 }
