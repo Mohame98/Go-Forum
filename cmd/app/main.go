@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"database/sql"
 	// "crypto/tls"
+	"github.com/joho/godotenv"
 	"log/slog"
 	"net/http"
 	"time"
@@ -77,7 +78,7 @@ func main() {
 	// }
 
 	server := &http.Server{
-		Addr: *addr,
+		Addr: ":" + *addr,
 		MaxHeaderBytes: 524288,
 		Handler: app.routes(),
 		ErrorLog: slog.NewLogLogger(logger.Handler(), slog.LevelError),
@@ -86,6 +87,12 @@ func main() {
 		IdleTimeout: time.Minute,
 		ReadTimeout: 5 * time.Second,
 		WriteTimeout: 10 * time.Second,
+	}
+
+	// Load environment variables from .env file
+	err = godotenv.Load()
+	if err != nil { logger.Error(err.Error())
+		os.Exit(1)
 	}
 
 	// Use environment variable for port or fallback to default port
